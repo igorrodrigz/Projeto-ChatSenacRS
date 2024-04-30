@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+
+<html lang="pt-br">
+
+    <head>
+
+        <meta charset="UTF-8">
+
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+        <meta name="viewport"content="width=device-width, initial-scale=1.0">
+
+        <link rel="stylesheet" href="style.css">
+
+        <title>Esqueci a senha</title>
+
+    </head>
+
+    <body>
+
+        <div id="EsqueciSenha">
+
+            <form class="card">
+
+                <div class="card-header">
+
+                    <h2>Recuperar senha</h2>
+
+                </div>
+
+                <div class="card-content">
+
+                    <div class="card-content-area">
+
+                        <label for="usuario">Digite seu e-mail</label>
+
+                        <input type="text" id="usuario" autocomplete="off">
+
+                    </div>
+
+                    <div class="card-content-area">
+
+                        <label for="date">Data de nascimento</label>
+
+                        <input type="date"> 
+
+                    </div>
+
+                </div>
+
+                <div class="card-footer">
+                    <input type="button" value="Solicitar Senha" class="submit" id="loginButton">
+                    <a href="#" class="recuperar_senha">Precisa de ajuda?</a>
+                </div>
+                
+                <script>
+                    document.getElementById('loginButton').addEventListener('click', function() {
+                        window.location.href = 'telalogin.html';
+                    });
+                </script>
+                
+
+            </form>
+
+        </div>
+
+    </body>
+
+</html>
