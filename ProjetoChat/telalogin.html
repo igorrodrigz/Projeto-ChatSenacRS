@@ -1,69 +1,53 @@
 <!DOCTYPE html>
-
 <html lang="pt-br">
-
     <head>
-
         <meta charset="UTF-8">
-
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-
         <meta name="viewport"content="width=device-width, initial-scale=1.0">
-
         <link rel="stylesheet" href="style.css">
-
         <title>Login</title>
-
     </head>
-
     <body>
-
         <div id="login">
-
-            <form class="card">
-
+            <form class="card" action="/menuusuario.html" method="POST"> 
                 <div class="card-header">
-
                     <h2>Login</h2>
-
                 </div>
-
                 <div class="card-content">
-
                     <div class="card-content-area">
-
                         <label for="usuario">Usuário</label>
-
-                        <input type="text" id="usuario" autocomplete="off">
-
+                        <input type="text" id="usuario" aria-label="Usuário" autocomplete="off" required>
                     </div>
-
                     <div class="card-content-area">
-
                         <label for="password">Senha</label>
-
-                        <input type="password" id="password" autocomplete="off">
-
+                        <input type="password" id="password" aria-label="Senha" autocomplete="off" required>
                     </div>
-
                 </div>
-
                 <div class="card-footer">
-                    <input type="button" value="login" class="submit" id="loginButton">
+                    <input type="submit" value="login" class="submit" id="loginButton">
                     <a href="esqueceuasenha.html" class="recuperar_senha">Esqueceu a senha?</a>
                 </div>
-                
-                <script>
-                    document.getElementById('loginButton').addEventListener('click', function() {
-                        window.location.href = 'menuusuario.html';
-                    });
-                </script>
-                
-
             </form>
-
         </div>
+                
+        <script>
+            document.querySelector('.card').addEventListener('submit', function(event) {
+                const usuario = document.get.getElementById('usuario').value;
+                const senha = document.get.getElementById('password').value;
+                if (usuario === "" || senha === "") {
+                    event.preventDefault();
+                    alert("Por favor, preencha todos os campos.");
+                }
+            }); 
 
+            document.getElementById('loginButton').addEventListener('click', function(event) {
+                const usuario = document.getElementById('usuario').value;
+                const senha = document.getElementById('password').value;
+                if (usuario === "" || senha === "") {
+                    event.preventDefault();
+                    alert("Por favor, preencha todos os campos.");
+                }
+            });
+        </script>
     </body>
-
 </html>

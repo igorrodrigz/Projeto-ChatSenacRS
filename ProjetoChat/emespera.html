@@ -2,93 +2,14 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <meta name="Menu-usuario" content="width=device-width, initial-scale=1.0">
-    
-    <title>Menu-usuario</title>
-<style>
-    body {
-        margin: 0;
-        padding: 0;
-        font-family: Arial, sans-serif;
-    }
-    .menu {
-        text-align: center;
-    }
-    
-    .submenu {
-        display: inline-block;
-        text-align: left;
-    }
-    .menu_lateral {
-        height: 100%;
-        width: 115px;
-        position: fixed;
-        top: 0;
-        left: 0;
-        background-color:gainsboro;
-        padding-top: 20px;
-    }
-    
-    .menu_lateral a {
-        padding: 10px;
-        text-decoration: none;
-        font-size: 18px;
-        color:black;
-        display: block;
-    }
-    
-    .menu_lateral a:hover {
-        background-color:gainsboro
-    }
-    
-    .content {
-        margin-left: 250px;
-        padding: 20px;
-    }    
-
-    .cabecalho {
-        background-color: #444;
-        color: #fff;
-        padding: 20px;
-        text-align: center;
-    }
-
-    .cabecalho h1 {
-        margin: 0;
-    }
-
-</style>
-<div class="cabecalho">
-    <h1>Chat SenacRS</h1>
-</div>    
-<div class="menu">
-    <h1>Menu</h1>
-    <div class="submenu"
-        <h2>Em Espera</h2>
-        <body>
-            <h1>Aguardando Atendimento:</h1>
-            <form method="post" action="chamados-em-espera">
-            <select name="contato" size ="15" >
-            <option value="bota">Raul Seixas</option>
-            <option value="fla">Belchior</option>
-            <option value="flu">Rita Lee</option>
-            <option value="vasco">Leandro</option>
-            <option value="flu">Leonardo</option>
-            <option value="vasco">Ney Matogrosso</option>
-            </select><br>
-            <input type="submit" value="Atender Agora" />
-            <input type="reset" value="Transferir Conversa" />
-            </form>
-            </body>
-
-    </div>
-</div>
-
-
-</div>
-</style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Em Espera</title>
 </head>
 <body>
+    <div class="cabecalho">
+        <h1>Chat SenacRS</h1>
+    </div>
     <div class="menu_lateral">
         <a href="menuusuario.html">Usuário</a>
         <a href="ematendimento.html">Em Atendimento</a>
@@ -96,8 +17,22 @@
         <a href="finalizados.html">Finalizados</a>
         <a href="#">Link 5</a>
     </div>
-
-    
-    
-    </body>
-    </html>
+    <div class="content">
+        <div class="menu">
+            <h1>Lista de clientes em espera</h1>
+            <form method="post" action="ematendimento.html">
+                <select name="contato" size="15">
+                    <option value="id1">Raul Seixas</option>
+                    <option value="id2">Belchior</option>
+                    <option value="id3">Rita Lee</option>
+                    <option value="id4">Leandro</option>
+                    <option value="id5">Leonardo</option>
+                    <option value="id6">Ney Matogrosso</option>
+                </select><br>
+                <input type="submit" value="Atender Agora">
+                <input type="reset" value="Transferir Conversa">
+            </form>
+        </div>
+    </div>
+</body>
+</html>
