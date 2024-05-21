@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Historico de conversas finalizadas</title>
+</head>
+<body>
+    <div class="menu_lateral">
+        <a href="menuusuario.html">Usuário</a>
+        <a href="ematendimento.html">Em Atendimento</a>
+        <a href="emespera.html">Em Espera</a>
+        <a href="finalizados.html">Finalizados</a>
+    </div>
+    <div class="cabecalho">
+        <h1>Chat SenacRS</h1>
+    </div>
+
+    <main>
+        <div class="content">
+            <div class="chat-wrapper">
+                <h2>Histórico de Conversa com <span id="nome-contato"></span></h2>
+                <img src="senac-logo-0.png" width="80" style="border-radius: 50%;" alt="logo senac">
+                <div class="chat-container" id="chat-container">
+                    <div class="message user-message">blablablablabla</div>
+                </div>
+
+                <input type="text" class="chat-input" id="user-input" placeholder="Digite sua mensagem aqui para retomar a conversa">
+                <button onclick="sendMessage()">Enviar</button>
+            </div>
+        </div>
+
+        <script>
+            // Captura o parâmetro da URL
+            var params = new URLSearchParams(window.location.search);
+            var contato = params.get('contato');
+
+            // Insere o valor do parâmetro no título da janela de conversa
+            document.getElementById('nome-contato').innerText = contato;
+
+
+            function sendMessage() {
+                var userInput = document.getElementById('user-input').value;
+                if (userInput.trim() === '') return;
+
+                var chatContainer = document.getElementById('chat-container');
+                var message = document.createElement('div');
+                message.classList.add('message', 'user-message');
+                message.innerText = userInput;
+                chatContainer.appendChild(message);
+
+                document.getElementById('user-input').value = '';
+                chatContainer.scrollTop = chatContainer.scrollHeight;
+            }
+        </script>
+    </main>
+</body>
+</html>
