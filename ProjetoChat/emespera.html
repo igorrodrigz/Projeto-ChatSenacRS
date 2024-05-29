@@ -19,19 +19,27 @@
     <div class="content">
         <div class="menu">
             <h1>Lista de clientes em espera</h1>
-            <form method="post" action="ematendimento.html">
+            <form method="get" action="ematendimento.html" onsubmit="return atenderCliente()">
                 <select name="contato" size="15">
-                    <option value="id1">Raul Seixas</option>
-                    <option value="id2">Belchior</option>
-                    <option value="id3">Rita Lee</option>
-                    <option value="id4">Leandro</option>
-                    <option value="id5">Leonardo</option>
-                    <option value="id6">Ney Matogrosso</option>
+                    <option value="Raul Seixas">Raul Seixas</option>
+                    <option value="Belchior">Belchior</option>
+                    <option value="Rita Lee">Rita Lee</option>
+                    <option value="Leandro">Leandro</option>
+                    <option value="Leonardo">Leonardo</option>
+                    <option value="Ney Matogrosso">Ney Matogrosso</option>
                 </select><br>
                 <input type="submit" value="Atender Agora">
                 <input type="reset" value="Transferir Conversa">
             </form>
         </div>
     </div>
+
+    <script>
+        function atenderCliente() {
+            var select = document.getElementById('contato');
+            var selectedOption = select.options[select.selectedIndex].value;
+            localStorage.setItem('clienteEmAtendimento', selectedOption);
+        }
+    </script>
 </body>
 </html>

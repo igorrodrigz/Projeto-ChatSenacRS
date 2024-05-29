@@ -23,10 +23,9 @@
             <h2>Em Atendimento</h2>
             <img src="reicharles.jpg" width="40" style="border-radius: 50%;" alt="Cliente">
             <h3>Dados do cliente</h3>
+            <div id="cliente-dados"></div>
 
-            <div class="chat-container" id="chat-container">
-                <div class="message user-message">Olá! Meu nome é Igor, como posso te ajudar hoje?</div>
-            </div>
+            <div class="chat-container" id="chat-container"></div>
 
             <input type="text" class="chat-input" id="user-input" placeholder="Digite sua mensagem aqui...">
             <button onclick="sendMessage()">Enviar</button>
@@ -34,19 +33,61 @@
     </div>
 
     <script>
+        var clienteMessages = [
+            "Olá! Meu nome é João, estou com um problema no meu pedido.",
+            "Estou aguardando uma resposta há um tempo, poderia me ajudar?",
+            "Eu preciso de assistência com a entrega do meu produto.",
+            "Acho que houve um engano na cobrança da última fatura."
+        ];
+
+        var messageIndex = 0;
+
         function sendMessage() {
             var userInput = document.getElementById('user-input').value;
             if (userInput.trim() === '') return;
 
             var chatContainer = document.getElementById('chat-container');
-            var message = document.createElement('div');
-            message.classList.add('message', 'user-message');
-            message.innerText = userInput;
-            chatContainer.appendChild(message);
+            var userMessage = document.createElement('div');
+            userMessage.classList.add('message', 'user-message');
+            userMessage.innerText = userInput;
+            chatContainer.appendChild(userMessage);
+
+            // Simular resposta do atendente
+            setTimeout(function() {
+                var clientMessage = document.createElement('div');
+                clientMessage.classList.add('message', 'client-message');
+                clientMessage.innerText = clienteMessages[messageIndex];
+                chatContainer.appendChild(clientMessage);
+                chatContainer.scrollTop = chatContainer.scrollHeight;
+                messageIndex++;
+
+                // Resetar o índice quando chegar ao final das mensagens
+                if (messageIndex >= clienteMessages.length) {
+                    messageIndex = 0;
+                }
+            }, 1000);
 
             document.getElementById('user-input').value = '';
             chatContainer.scrollTop = chatContainer.scrollHeight;
         }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            var params = new URLSearchParams(window.location.search);
+            var contato = params.get('contato');
+
+            if (contato) {
+                var clienteDados = document.createElement('p');
+                clienteDados.innerText = `Cliente: ${contato}`;
+                document.getElementById('cliente-dados').appendChild(clienteDados);
+            } else {
+                var cliente = localStorage.getItem('clienteEmAtendimento');
+                if (cliente) {
+                    var clienteDados = document.createElement('p');
+                    clienteDados.innerText = `Cliente: ${cliente}`;
+                    document.getElementById('cliente-dados').appendChild(clienteDados);
+                }
+            }
+        });
     </script>
 </body>
 </html>
