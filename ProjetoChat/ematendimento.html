@@ -34,10 +34,11 @@
 
     <script>
         var clienteMessages = [
-            "Olá! Meu nome é Rita Lee, estou com um problema no meu pedido.",
-            "Estou aguardando uma resposta há um tempo, poderia me ajudar?",
-            "Eu preciso de assistência com a entrega do meu produto.",
-            "Acho que houve um engano na cobrança da última fatura."
+            "Oi! Meu nome é Rita Lee, estou concluíndo o ensino médio. Posso ingressar em algum curso técnico?",
+            "Quero saber quais cursos o Senac tem disponível, poderia me ajudar?",
+            "Meu pai quer investir na minha qualificação profissional, mas tem medo que os cursos sejam muito caros.",
+            "Tem mais uma coisinha, eu ainda não sei qual curso quero fazer. Vocês podem me ajudar a escolher?",
+            "Tenho medo de escolher um e me arrepender depois..."
         ];
 
         var messageIndex = 0;
@@ -65,7 +66,7 @@
                 if (messageIndex >= clienteMessages.length) {
                     messageIndex = 0;
                 }
-            }, 1000);
+            }, 3000);
 
             document.getElementById('user-input').value = '';
             chatContainer.scrollTop = chatContainer.scrollHeight;
