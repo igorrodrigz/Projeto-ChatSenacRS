@@ -21,15 +21,25 @@
     <div class="content">
         <h2>Conversas finalizadas</h2>
         <form method="get" action="historico.html" class="history-form">
-            <select name="contato">
-                <option value="Prof. Alipio">Prof. Alipio</option>
-                <option value="Direção">Direção</option>
-                <option value="Secretaría">Secretaría</option>
-                <option value="Marcelo Camelo">Marcelo Camelo</option>
+            <select name="contato" id="contato-select">
             </select>
             <input type="submit" value="Abrir Histórico">
             <input type="reset" value="Baixar Conversa">
         </form>
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var historico = JSON.parse(localStorage.getItem('historicoAtendimentos')) || [];
+            var contatoSelect = document.getElementById('contato-select');
+
+            historico.forEach(function(cliente) {
+                var option = document.createElement('option');
+                option.value = cliente;
+                option.innerText = cliente;
+                contatoSelect.appendChild(option);
+            });
+        });
+    </script>
 </body>
 </html>

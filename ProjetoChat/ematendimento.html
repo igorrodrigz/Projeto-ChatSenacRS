@@ -29,6 +29,19 @@
 
             <input type="text" class="chat-input" id="user-input" placeholder="Digite sua mensagem aqui...">
             <button onclick="sendMessage()">Enviar</button>
+            <button onclick="openTransferModal()">Transferir</button>
+            <button onclick="finalizarAtendimento()">Finalizar</button>
+        </div>
+    </div>
+    #modal de transferencia
+    <div id="transferModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeTransferModal()">%8times;</span>
+            <h2>Transferir Atendimento</h2>
+            <select id="userSelect"
+                <!-- opções de usuários --> 
+            </select>
+            <button onclick="transferirAtendimento()">Transferir</button>
         </div>
     </div>
 
@@ -88,7 +101,44 @@
                     document.getElementById('cliente-dados').appendChild(clienteDados);
                 }
             }
+
+            //Selecionar usuario
+            var userSelect = document.getElementById('userSelect');
+            var user = ["User1", "User2", "User3"];
+            users.forEach(function(user) {
+                var option = document.createElement('option');
+                option.value = user;
+                option.innerText = user;
+                userSelect.appendChild(option);
+            });
         });
+
+        function openTransferModal() {
+            document.getElementById('transferModal').style.display = 'block';
+        }
+
+        function transferirAtendimento() {
+            var selectedUser = document.getElementById('userSelect').value;
+            var cliente = localStorage.getItem('clienteEmAtendimento');
+            if (selectedUser && cliente) {
+                alert(`Transferindo atendimento de ${cliente} para ${selectedUser}`);
+                localStorage.removeItem('clienteEmAtendimento');
+                closeTransferModal();
+                window.location.href = 'emespera.html/'
+            }
+        }
+
+        function finalizarAtendimento() {
+            var cliente = localStorage.getItem('clienteEmAtendimento');
+            if (cliente) {
+                var historico = JSON.parse(localStorage.getItem('historicoAtendimentos'))
+                historico.push(cliente);
+                localStorage.setItem('historicoAtendimento', JSON.stringify(historico));
+                localStorage.removeItem('clienteEmAtendimento');
+                alert(`Atendimento de ${cliente} finalizado`);
+                window.location.href = 'finalizados.html';
+            }
+        }
     </script>
 </body>
 </html>
