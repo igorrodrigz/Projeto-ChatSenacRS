@@ -20,7 +20,7 @@
         <div class="menu">
             <h1>Lista de clientes em espera</h1>
             <form method="get" action="ematendimento.html" onsubmit="return atenderCliente()">
-                <select name="contato" size="15">
+                <select name="contato" id="contato" size="15">
                     <option value="Raul Seixas">Raul Seixas</option>
                     <option value="Belchior">Belchior</option>
                     <option value="Rita Lee">Rita Lee</option>
@@ -29,8 +29,22 @@
                     <option value="Ney Matogrosso">Ney Matogrosso</option>
                 </select><br>
                 <input type="submit" value="Atender Agora">
-                <input type="reset" value="Transferir Conversa">
             </form>
+            <button onclick="openTransferModal()">Transferir Conversa</button>
+        </div>
+    </div>
+
+    <!-- Modal de Transferência -->
+    <div id="transferModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <span class="close" onclick="closeTransferModal()">&times;</span>
+            <h2>Transferir Atendimento</h2>
+            <select id="userSelect">
+                <option value="User1">User1</option>
+                <option value="User2">User2</option>
+                <option value="User3">User3</option>
+            </select>
+            <button onclick="transferirAtendimento()">Transferir</button>
         </div>
     </div>
 
@@ -39,6 +53,37 @@
             var select = document.getElementById('contato');
             var selectedOption = select.options[select.selectedIndex].value;
             localStorage.setItem('clienteEmAtendimento', selectedOption);
+            return true;
+        }
+
+        function openTransferModal() {
+            var select = document.getElementById('contato');
+            var selectedOption = select.options[select.selectedIndex].value;
+            if (!selectedOption) {
+                alert("Por favor, selecione um cliente para transferir.");
+                return;
+            }
+            document.getElementById('transferModal').style.display = 'block';
+        }
+
+        function closeTransferModal() {
+            document.getElementById('transferModal').style.display = 'none';
+        }
+
+        function transferirAtendimento() {
+            var select = document.getElementById('contato');
+            var selectedClient = select.options[select.selectedIndex].value;
+            var selectedUser = document.getElementById('userSelect').value;
+
+            if (selectedUser && selectedClient) {
+                alert(`Transferindo atendimento de ${selectedClient} para ${selectedUser}`);
+                // Lógica de transferência de conversa
+                localStorage.removeItem('clienteEmAtendimento');
+                select.remove(select.selectedIndex);
+                closeTransferModal();
+            } else {
+                alert("Por favor, selecione um cliente e um usuário para transferir.");
+            }
         }
     </script>
 </body>

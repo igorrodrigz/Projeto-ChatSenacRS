@@ -33,28 +33,32 @@
             <button onclick="finalizarAtendimento()">Finalizar</button>
         </div>
     </div>
-    #modal de transferencia
+    <!-- Modal de transferência -->
     <div id="transferModal" class="modal">
         <div class="modal-content">
-            <span class="close" onclick="closeTransferModal()">%8times;</span>
+            <span class="close" onclick="closeTransferModal()">&times;</span>
             <h2>Transferir Atendimento</h2>
-            <select id="userSelect"
-                <!-- opções de usuários --> 
+            <select id="userSelect">
+                <!-- opções de usuários -->
             </select>
             <button onclick="transferirAtendimento()">Transferir</button>
         </div>
     </div>
 
     <script>
-        var clienteMessages = [
-            "Oi! Meu nome é Rita Lee, estou concluíndo o ensino médio. Posso ingressar em algum curso técnico?",
-            "Quero saber quais cursos o Senac tem disponível, poderia me ajudar?",
-            "Meu pai quer investir na minha qualificação profissional, mas tem medo que os cursos sejam muito caros.",
-            "Tem mais uma coisinha, eu ainda não sei qual curso quero fazer. Vocês podem me ajudar a escolher?",
-            "Tenho medo de escolher um e me arrepender depois..."
-        ];
+        var clienteMessages = {
+            "Rita Lee": [
+                "Oi! Meu nome é Rita Lee, estou concluíndo o ensino médio. Posso ingressar em algum curso técnico?",
+                "Quero saber quais cursos o Senac tem disponível, poderia me ajudar?",
+                "Meu pai quer investir na minha qualificação profissional, mas tem medo que os cursos sejam muito caros.",
+                "Tem mais uma coisinha, eu ainda não sei qual curso quero fazer. Vocês podem me ajudar a escolher?",
+                "Tenho medo de escolher um e me arrepender depois..."
+            ],
+            // Adicione mais mensagens específicas para outros clientes conforme necessário
+        };
 
         var messageIndex = 0;
+        var clienteAtual = "";
 
         function sendMessage() {
             var userInput = document.getElementById('user-input').value;
@@ -66,17 +70,18 @@
             userMessage.innerText = userInput;
             chatContainer.appendChild(userMessage);
 
-            // Simular resposta do atendente
+            // Simular resposta do cliente
             setTimeout(function() {
                 var clientMessage = document.createElement('div');
                 clientMessage.classList.add('message', 'client-message');
-                clientMessage.innerText = clienteMessages[messageIndex];
+                var messages = clienteMessages[clienteAtual] || ["Não há mensagens disponíveis para este cliente."];
+                clientMessage.innerText = messages[messageIndex];
                 chatContainer.appendChild(clientMessage);
                 chatContainer.scrollTop = chatContainer.scrollHeight;
                 messageIndex++;
 
                 // Resetar o índice quando chegar ao final das mensagens
-                if (messageIndex >= clienteMessages.length) {
+                if (messageIndex >= messages.length) {
                     messageIndex = 0;
                 }
             }, 3000);
@@ -93,18 +98,21 @@
                 var clienteDados = document.createElement('p');
                 clienteDados.innerText = `Cliente: ${contato}`;
                 document.getElementById('cliente-dados').appendChild(clienteDados);
+                clienteAtual = contato;
+                localStorage.setItem('clienteEmAtendimento', contato);
             } else {
                 var cliente = localStorage.getItem('clienteEmAtendimento');
                 if (cliente) {
                     var clienteDados = document.createElement('p');
                     clienteDados.innerText = `Cliente: ${cliente}`;
                     document.getElementById('cliente-dados').appendChild(clienteDados);
+                    clienteAtual = cliente;
                 }
             }
 
-            //Selecionar usuario
+            // Selecionar usuários para transferência
             var userSelect = document.getElementById('userSelect');
-            var user = ["User1", "User2", "User3"];
+            var users = ["Vendas", "Financeiro", "Secretaria"];
             users.forEach(function(user) {
                 var option = document.createElement('option');
                 option.value = user;
@@ -117,6 +125,10 @@
             document.getElementById('transferModal').style.display = 'block';
         }
 
+        function closeTransferModal() {
+            document.getElementById('transferModal').style.display = 'none';
+        }
+
         function transferirAtendimento() {
             var selectedUser = document.getElementById('userSelect').value;
             var cliente = localStorage.getItem('clienteEmAtendimento');
@@ -124,16 +136,16 @@
                 alert(`Transferindo atendimento de ${cliente} para ${selectedUser}`);
                 localStorage.removeItem('clienteEmAtendimento');
                 closeTransferModal();
-                window.location.href = 'emespera.html/'
+                window.location.href = 'emespera.html';
             }
         }
 
         function finalizarAtendimento() {
             var cliente = localStorage.getItem('clienteEmAtendimento');
             if (cliente) {
-                var historico = JSON.parse(localStorage.getItem('historicoAtendimentos'))
+                var historico = JSON.parse(localStorage.getItem('historicoAtendimentos')) || [];
                 historico.push(cliente);
-                localStorage.setItem('historicoAtendimento', JSON.stringify(historico));
+                localStorage.setItem('historicoAtendimentos', JSON.stringify(historico));
                 localStorage.removeItem('clienteEmAtendimento');
                 alert(`Atendimento de ${cliente} finalizado`);
                 window.location.href = 'finalizados.html';
