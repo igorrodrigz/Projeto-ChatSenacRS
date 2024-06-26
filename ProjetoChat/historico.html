@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
-    <title>Historico de conversas finalizadas</title>
+    <title>Histórico de Conversas Finalizadas</title>
 </head>
 <body>
     <div class="menu_lateral">
@@ -23,15 +23,18 @@
                 <h2>Histórico de Conversa com <span id="nome-contato"></span></h2>
                 <img src="senac-logo-0.png" width="80" style="border-radius: 50%;" alt="logo senac">
                 <div class="chat-container" id="chat-container">
-                    <div class="message user-message">blablablablabla</div>
+                    <!-- Aqui serão inseridas as mensagens de histórico -->
                 </div>
 
-                <input type="text" class="chat-input" id="user-input" placeholder="Digite sua mensagem aqui para retomar a conversa">
-                <button onclick="sendMessage()">Enviar</button>
+                <!-- Input para enviar mensagem (simulação) -->
+                <input type="text" class="chat-input" id="user-input" placeholder="Digite sua mensagem aqui para retomar a conversa" disabled>
+                <button onclick="sendMessage()" disabled>Enviar</button>
             </div>
         </div>
+    </main>
 
-        <script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
             // Captura o parâmetro da URL
             var params = new URLSearchParams(window.location.search);
             var contato = params.get('contato');
@@ -39,21 +42,21 @@
             // Insere o valor do parâmetro no título da janela de conversa
             document.getElementById('nome-contato').innerText = contato;
 
+            // Busca o histórico do cliente no localStorage
+            var historico = JSON.parse(localStorage.getItem('historicoAtendimentos')) || [];
+            var clienteHistorico = historico.filter(function(cliente) {
+                return cliente === contato;
+            });
 
-            function sendMessage() {
-                var userInput = document.getElementById('user-input').value;
-                if (userInput.trim() === '') return;
-
-                var chatContainer = document.getElementById('chat-container');
+            // Exibe as mensagens de histórico na página
+            var chatContainer = document.getElementById('chat-container');
+            clienteHistorico.forEach(function(cliente) {
                 var message = document.createElement('div');
-                message.classList.add('message', 'user-message');
-                message.innerText = userInput;
+                message.classList.add('message', 'client-message');
+                message.innerText = `Atendimento finalizado ou transferido para ${cliente}`;
                 chatContainer.appendChild(message);
-
-                document.getElementById('user-input').value = '';
-                chatContainer.scrollTop = chatContainer.scrollHeight;
-            }
-        </script>
-    </main>
+            });
+        });
+    </script>
 </body>
 </html>
